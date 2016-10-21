@@ -1,0 +1,31 @@
+{% load static %}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+
+    <link rel="stylesheet" type="text/css" href="{%  static "Board/board_style.css" %}" media="screen">
+</head>
+<body>
+
+<div class="main-container">
+
+    {% include 'Board/nav.html' %}
+
+    <div class="logo"><h1>  {% block logo %} {% endblock %}
+        </h1></div>
+
+    <div class="threads-container">
+
+    {%  block content %}
+
+    {% endblock %}
+    </div>
+</div>
+
+
+</body>
+</html>

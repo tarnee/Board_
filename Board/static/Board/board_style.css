@@ -1,0 +1,140 @@
+html, body {
+margin: 0;
+padding: 0;
+}
+
+body {
+    font-family: Ubuntu;
+    background-color: #ffffe6;
+    color: rgba(53, 1, 3, 0.96);
+}
+
+.main-container {
+     margin: 0 auto;
+}
+.site-menu {
+    margin-left: 0px;
+    float: left;
+    width: 20%;
+    padding-left: 10px;
+
+}
+.threads-container {
+    margin:auto;
+
+    float: left;
+    width: 75%;
+    padding-left: 10px;
+
+}
+.site-menu ul {
+background-color: bisque;
+list-style: none;
+padding: 0;
+border: 0;
+}
+.site-menu ul li {
+border-bottom: 0;
+padding: 5px;
+}
+.site-menu ul li:last-child {
+border-bottom: 0;
+}
+.site-menu ul li a {
+    color: rgba(53, 1, 3, 0.96);
+text-decoration: none;
+}
+hr {
+    margin-top: 10px;
+}
+.site-menu ul li a:hover {
+text-decoration: none;
+}
+.nav_title {
+    background-color: burlywood;
+}
+.logo h1 {
+    padding-top: 50px;
+    padding-bottom: 30px;
+    text-align: center;
+
+
+}
+.threads-container ul {
+    list-style: none;
+    padding: 0;
+    border: 0;
+}
+.threads-container ul li {
+    margin-bottom: 5px;
+    list-style: none;
+    padding: 5px;
+    border: 1px solid;
+}
+.comments_table li {
+    background-color: bisque;
+    border-radius: 5px;
+}
+
+.new_thread {
+
+
+    padding-top: 30px;
+    padding-left: 5px;
+    padding-bottom: 30px;
+    padding-right: 5px;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.new_thread * {
+    vertical-align: middle;
+}
+.new_thread label {
+    background-color: burlywood;
+    width: 150px;
+    padding:3px;
+    margin: 3px;
+    display: inline-block;
+
+}
+
+hr {
+    color: rgba(53, 1, 3, 0.96);
+}
+.thread-name {
+    font-size: large;
+    font-weight: bold;
+    color: red;
+}
+.post_date{
+    color: rgba(53, 1, 3, 0.96);
+}
+
+.post_author {
+    color: green;
+    margin-right: 5px;
+}
+.post_number {
+    margin-left: 5px;
+    color: rgba(53, 1, 3, 0.96);
+}
+
+
+.new_thread_form {
+  display: inline;
+  width: 140px;
+  text-align: left;
+}
+
+.wrap p {
+    word-wrap: break-word;
+}
+
+.op-text p {
+    word-wrap: break-word;
+}
+
+.new_thread_form label {
+    background-color: burlywood;
+}

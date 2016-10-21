@@ -1,0 +1,12 @@
+ <nav class="site-menu">
+              <ul>
+        <li class="nav_title">Разделы сайта</li>
+
+        <!— Sections list —>
+       {% for section in section_list %}
+            <li>
+                <a href="{% url 'Board:section' section.name_section %}">/{{ section.name_section }} - {{ section.description }}</a>
+          </li>
+        {% endfor %}
+        </ul>
+ </nav>
