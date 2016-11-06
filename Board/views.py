@@ -3,6 +3,7 @@ from .models import Section, Thread, Post, PostCounter, ImagesOfOriginalPost, Im
 from .forms import NewThreadForm, NewPostForm, NewImageForm
 from django.utils import timezone
 
+
 def section(request, section_id):
 
     section_list = Section.objects.all
