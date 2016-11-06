@@ -34,3 +34,12 @@ class NewPostForm(ModelForm):
             'message': "Текст",
         }
 
+
+class NewImageForm(ModelForm):
+    class Meta:
+        model = ImagesOfPost
+        fields = ('image',
+                  )
+        labels = {'image': 'Картинка',
+                  }
+

@@ -12,7 +12,11 @@
 
 
             <div class="op-text">
-                <img src="{{ P_image.image.url }}" alt="">
+
+
+
+
+         <img src="{{ P_image.image_thumbnail.url }}" alt="">
                 <br>
                 <p>{{ thread.original_post }}</p>
 
@@ -33,8 +37,12 @@
 
 <br>
                     {% for image in post.img.all %}
-                        <p> <img src="{{ image.image.url }}" alt=""></p>
+                     {% if image.image %} <p>  <a href="{{ image.image }}">
 
+                            <img src="{{ image.image_thumbnail.url }}" alt="" >
+
+                        </a>   </p>
+                    {% endif %}
                         {% endfor %}
 
 
