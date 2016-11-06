@@ -127,7 +127,7 @@ hr {
   text-align: left;
 }
 
-.wrap p {
+.comments_table {
     word-wrap: break-word;
 }
 
@@ -138,3 +138,4 @@ hr {
 .new_thread_form label {
     background-color: burlywood;
 }
+

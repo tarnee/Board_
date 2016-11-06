@@ -1,7 +1,9 @@
 from django.db import models
-
+from django.db.models.signals import pre_delete
+from django.dispatch.dispatcher import receiver
 
 # Create your models here.
+
 class Section(models.Model):
     # a, vg, b, etc
     name_section = models.CharField(max_length=3)
@@ -38,7 +40,7 @@ class Thread(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name_thread
+        return self.section.name_section + " " + self.name_thread
 
 
 class Post(models.Model):
@@ -47,6 +49,8 @@ class Post(models.Model):
 
     # 1 september 2016
     date_pub = models.DateTimeField()
+
+    number_of_image = models.IntegerField(default="0")
 
     # number of post in the section
     post_number = models.IntegerField(default=1)
@@ -69,4 +73,46 @@ class PostCounter(models.Model):
     def __str__(self):
         strings = self.section.name_section
         return strings + " " + str(self.post_number) + " постов, " + str(self.threads_number) + " тредов"
+
+
+def user_directory_path(instance, filename):
+    return "Media/{0}/{1}/{2}_{3}".format(instance.thread.section.name_section, instance.thread.id,
+                                          str(instance.id), filename)
+
+
+def get_name(instance, filename):
+    x, y = filename
+    return x
+
+
+class ImagesOfOriginalPost(models.Model):
+    name = models.CharField(max_length=50)
+    thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=user_directory_path)
+
+    def __str__(self):
+        string = " ".join([self.thread.section.name_section, self.thread.name_thread, "1"])
+        return string
+
+
+def user_directory_path_post(instance, filename):
+    return "Media/{0}/{1}/{2}_{3}".format(instance.post.thread.section.name_section, instance.post.thread.id,
+                                          str(instance.id), filename)
+
+
+class ImagesOfPost(models.Model):
+    name = models.CharField(max_length=6, default="image1")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="img")
+    image = models.ImageField(upload_to=user_directory_path_post, blank=True)
+
+    def __str__(self):
+        string = " ".join([self.post.thread.section.name_section, self.post.thread.name_thread,
+                           str(self.post.post_number), self.name])
+        return string
+
+
+@receiver(pre_delete, sender=ImagesOfOriginalPost)
+def delete_op_post(sender, instance, **kwargs):
+    # Pass false so FileField doesn't save the model.
+    instance.image.delete(False)
 

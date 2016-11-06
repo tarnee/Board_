@@ -1,5 +1,6 @@
 <!-- one thread -->
-        {% for thread, post_list in zip_list %}
+
+        {% for thread, P_image, post_list, image_list_one_thread in zip_list %}
 
             <div class="thread">
             <div class="thread-name"> {{ thread.name_thread }}
@@ -7,23 +8,45 @@
                 <span class="post_author"> {{ thread.name_author }}</span>
                 <span class="post_date">{{ thread.date_pub }}</span>
                 <span class="post_number">No. {{ thread.original_post_number }}</span></div>
-                <br>
-            <h1>{{ post_list.objects.all }}</h1>
 
-            <div class="op-text"><p>{{ thread.original_post }}</p></div>
+
+
+            <div class="op-text">
+                <img src="{{ P_image.image.url }}" alt="">
+                <br>
+                <p>{{ thread.original_post }}</p>
+
+            </div>
 
 
                 <!-- post for the thread -->
                 <div class="comments_table">
 <ul>
+
                     {% for post in post_list %}
+
                     <li><span class="post_author">{{ post.name_author }}</span>
                         <span class="post_date">{{ post.date_pub }}</span>
-                        <span class="post_number">No. {{ post.post_number }}</span>
-                        <div><p class="wrap"> {{ post.message }}</p></div>
-                    </li>
+
+                        <span class="post_number">No. {{ post.post_number }}</span> <br>
+
+
+<br>
+                    {% for image in post.img.all %}
+                        <p> <img src="{{ image.image.url }}" alt=""></p>
+
                         {% endfor %}
+
+
+                        <div><p class="wrap"> {{ post.message }}
+
+                        </p></div>
+                    </li>
+                            {% endfor %}
+
+
                     <li> {% include 'Board/form_post_new.html' %}  </li>
+{% endfor %}
 
                 </ul>
 </div>
@@ -34,4 +57,3 @@
 
         </div>
         <hr>
-        {% endfor %}
