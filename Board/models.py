@@ -92,7 +92,7 @@ def get_name(instance, filename):
 
 class ImagesOfOriginalPost(models.Model):
     name = models.CharField(max_length=50)
-    thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
+    thread = models.ForeignKey(Thread, on_delete=models.CASCADE, related_name="op_img")
     image = models.ImageField(upload_to=user_directory_path)
     image_thumbnail = ImageSpecField(source='image',
                                      processors=[ResizeToFill(300, 200)],

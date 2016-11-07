@@ -1,67 +1,54 @@
 <!-- one thread -->
+{% for thread, post_list, image_list_one_thread in zip_list %}
+    <div class="thread">
 
-        {% for thread, P_image, post_list, image_list_one_thread in zip_list %}
+    <!-- the header of a original post -->
+    <div class="thread-name"> {{ thread.name_thread }}
+        <span class="post_author"> {{ thread.name_author }}</span>
+         <span class="post_date">{{ thread.date_pub|date:"D d M Y" }}</span>
+             <span class="post_date">{{ thread.date_pub|time:"H:i" }}</span>
 
-            <div class="thread">
-            <div class="thread-name"> {{ thread.name_thread }}
+        <span class="post_number">No. {{ thread.original_post_number }}</span></div>
 
-                <span class="post_author"> {{ thread.name_author }}</span>
-                <span class="post_date">{{ thread.date_pub }}</span>
-                <span class="post_number">No. {{ thread.original_post_number }}</span></div>
+    <!-- op text -->
+    <div class="op-text">
+        {% for img in thread.op_img.all %}
+        <img src="{{ img.image_thumbnail.url }}" alt="xxx">
 
+            {% endfor %}
 
+        <br>
+        <p>{{ thread.original_post }}</p>
+    </div>
 
-            <div class="op-text">
+    <!-- post for the thread -->
+    <div class="comments_table">
+        <ul>
+        {% for post in post_list %}
+            <li><span class="post_author">{{ post.name_author }}</span>
+                <span class="post_date">{{ post.date_pub|date:"D d M Y" }}</span>
+             <span class="post_date">{{ post.date_pub|time:"H:i" }}</span>
 
-
-
-
-         <img src="{{ P_image.image_thumbnail.url }}" alt="">
+                <span class="post_number">No. {{ post.post_number }}</span> <br>
                 <br>
-                <p>{{ thread.original_post }}</p>
+    <!-- pictures of some post -->
+                {% for image in post.img.all %}
+                    {% if image.image %}
 
-            </div>
+                            <a href="{{ image.image }}">
+                            <img src="{{ image.image_thumbnail.url }}" alt="" ></a>
 
-
-                <!-- post for the thread -->
-                <div class="comments_table">
-<ul>
-
-                    {% for post in post_list %}
-
-                    <li><span class="post_author">{{ post.name_author }}</span>
-                        <span class="post_date">{{ post.date_pub }}</span>
-
-                        <span class="post_number">No. {{ post.post_number }}</span> <br>
-
-
-<br>
-                    {% for image in post.img.all %}
-                     {% if image.image %} <p>  <a href="{{ image.image }}">
-
-                            <img src="{{ image.image_thumbnail.url }}" alt="" >
-
-                        </a>   </p>
                     {% endif %}
-                        {% endfor %}
+                {% endfor %}
+    <!-- post text -->
+                <div><p class="wrap"> {{ post.message }}</p></div>
+            </li>
+        {% endfor %}
+    <!-- the form for the new post -->
 
-
-                        <div><p class="wrap"> {{ post.message }}
-
-                        </p></div>
-                    </li>
-                            {% endfor %}
-
-
-                    <li> {% include 'Board/form_post_new.html' %}  </li>
-{% endfor %}
-
-                </ul>
+        <li> {% include 'Board/form_post_new.html' %}  </li>
+    {% endfor %}
+    </ul>
 </div>
-
-
-
-
-
-        </div>
-        <hr>
+</div>
+<hr>

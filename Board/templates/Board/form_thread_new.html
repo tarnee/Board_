@@ -1,4 +1,7 @@
-    <form method="POST" class="new_thread_form">{% csrf_token %}
+    <form method="POST" class="new_thread_form" enctype="multipart/form-data">{% csrf_token %}
         {{ thread_form.as_p }}
+             {% for ff in new_thread_image %}
+        {{ ff.as_p }}
+            {% endfor %}
         <button type="submit" class="save btn btn-default" name="new_thread">Save</button>
     </form>

@@ -27,6 +27,11 @@ def section(request, section_id):
 
             post_count.save()
             new_thread.save()
+            image_form = NewImageForm(request.POST, request.FILES)
+            if image_form.is_valid() and request.FILES:
+
+                for img in request.FILES.getlist('image'):
+                    ImagesOfOriginalPost.objects.create(name=img.name, thread=new_thread, image=img)
 
     elif request.method == "POST" and 'new_post' in request.POST:
         form = NewPostForm(request.POST)
@@ -52,9 +57,7 @@ def section(request, section_id):
                 for img in request.FILES.getlist('image'):
                     ImagesOfPost.objects.create(name=img.name, post=new_post, image=img)
 
-    thread_list = section.threads.all()[0:9]
-
-    original_post_image = [ImagesOfOriginalPost.objects.get(thread__exact=x) for x in thread_list]
+    thread_list = section.threads.all()[0:]
 
     post_list = [x.posts_in_thread.all() if x.thread_posts_number <= 5 else x.posts_in_thread.all(
 
@@ -64,9 +67,10 @@ def section(request, section_id):
     image_list = [[some_post.img.all() for some_post in thread_l]
                   for thread_l in post_list]
 
-    zip_list = zip(thread_list, original_post_image, post_list, image_list)
+    zip_list = zip(thread_list, post_list, image_list)
 
     file_form_list = [NewImageForm() for i in range(4)]
+    op_img = [NewImageForm() for i in range(4)]
 
     context = {'section_list': section_list,
                'this_section': section,
@@ -76,6 +80,7 @@ def section(request, section_id):
                'thread_form': NewThreadForm(),
                'post_form': NewPostForm(),
                'image_form': file_form_list,
+               'new_thread_image': op_img,
                }
     return render(request, 'Board/section.html', context)
 
