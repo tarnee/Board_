@@ -22,5 +22,6 @@ urlpatterns = [
     url(regex=r'^admin/', view=admin.site.urls),
     url(regex=r'^board/', view=include('Board.urls')),
     url(regex=r'^', view=include('Board.urls')),
+    url(regex=r'^captcha/', view=include('captcha.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,8 +1,11 @@
 from django.forms import ModelForm, Textarea, HiddenInput
 from .models import Thread, Post, ImagesOfPost
+from captcha.fields import CaptchaField
 
 
 class NewThreadForm(ModelForm):
+
+    captcha = CaptchaField()
 
     class Meta:
         model = Thread
@@ -14,6 +17,7 @@ class NewThreadForm(ModelForm):
 
         }
         labels = {
+            
             'original_post': "Текст",
             'name_author': "Имя",
             'name_thread': "Тема",
@@ -22,6 +26,9 @@ class NewThreadForm(ModelForm):
 
 
 class NewPostForm(ModelForm):
+
+    captcha = CaptchaField()
+
     class Meta:
         model = Post
         fields = ('name_author', 'message', 'thread')

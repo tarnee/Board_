@@ -1,4 +1,5 @@
 <!-- one thread -->
+
 {% for thread, post_list, image_list_one_thread in zip_list %}
     <div class="thread">
 
@@ -49,6 +50,42 @@
         <li> {% include 'Board/form_post_new.html' %}  </li>
     {% endfor %}
     </ul>
+</div>
+
+  <div class="pagination">
+    <span class="step-links">
+     <!--   {% if thread_list.has_previous %}
+          <a href="?page={{ thread_list.previous_page_number }}">назад</a>
+        {% endif %}
+
+        <span class="current">
+            {{ thread_list.number }} из {{ thread_list.paginator.num_pages }}.
+        </span>
+
+        {% if thread_list.has_next %}
+           <a href="?page={{ thread_list.next_page_number }}">вперед</a>
+       {% endif %} -->
+
+     {% if thread_list.has_previous %}
+        <a class="prev-btn-btn-info" href="?page={{thread_list.previous_page_number}}">Назад</a>
+    {% endif %}
+    {% if thread_list.has_next %}
+        <a class="next-btn-btn-info" href="?page={{thread_list.next_page_number}}">Вперед</a>
+    {% endif %}
+    <div class="pages">
+
+        {% for pg in page_range %}
+            {% if thread_list.number == pg %}
+                <a href="?page={{pg}}" class="page-current">-{{pg}}-</a></li>
+            {% else %}
+                <a href="?page={{pg}}" class="page-not-current">{{pg}}</a></li>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+
+
+    </span>
 </div>
 </div>
 <hr>

@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Section, Thread, Post, PostCounter, ImagesOfOriginalPost, ImagesOfPost
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Section, PostCounter, ImagesOfOriginalPost, ImagesOfPost
 from .forms import NewThreadForm, NewPostForm, NewImageForm
 from django.utils import timezone
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def section(request, section_id):
@@ -32,6 +33,7 @@ def section(request, section_id):
 
                 for img in request.FILES.getlist('image'):
                     ImagesOfOriginalPost.objects.create(name=img.name, thread=new_thread, image=img)
+            return redirect("/" + section_id)
 
     elif request.method == "POST" and 'new_post' in request.POST:
         form = NewPostForm(request.POST)
@@ -56,12 +58,27 @@ def section(request, section_id):
             if image_form.is_valid() and request.FILES:
                 for img in request.FILES.getlist('image'):
                     ImagesOfPost.objects.create(name=img.name, post=new_post, image=img)
+            return redirect("/" + section_id)
 
-    thread_list = section.threads.all()[0:]
+    thread_list_all = section.threads.all()
+    paginator = Paginator(thread_list_all, 5)
+    page = request.GET.get('page')
 
-    post_list = [x.posts_in_thread.all() if x.thread_posts_number <= 5 else x.posts_in_thread.all(
+    try:
+        thread_list = paginator.page(page)
+    except PageNotAnInteger:
+        thread_list = paginator.page(1)
+    except EmptyPage:
+        thread_list = paginator.page(paginator.num_pages)
 
-    )[x.thread_posts_number-5:]
+    indexx = paginator.page_range.index(thread_list.number)
+    max_index = len(paginator.page_range)
+    start_index = indexx - 10 if indexx >= 10 else 0
+    end_index = indexx + 10 if indexx <= max_index - 10 else max_index
+    page_range = paginator.page_range[start_index:end_index]
+
+    post_list = [x.posts_in_thread.all()
+         #        if x.thread_posts_number <= 5 else x.posts_in_thread.all()[x.thread_posts_number-5:]
                  for x in thread_list]
 
     image_list = [[some_post.img.all() for some_post in thread_l]
@@ -81,6 +98,7 @@ def section(request, section_id):
                'post_form': NewPostForm(),
                'image_form': file_form_list,
                'new_thread_image': op_img,
+               'page_range': page_range,
                }
     return render(request, 'Board/section.html', context)
 

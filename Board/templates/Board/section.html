@@ -1,23 +1,24 @@
 {% extends 'Board/base.html' %}
 
 {% block title %}
-{{ this_section.description }}
+    {{ this_section.description }}
 {%  endblock %}
 
 {% block logo %}
-Раздел – {{ this_section.description }}
+    Раздел – {{ this_section.description }}
 {% endblock %}
-
 
 {% block content %}
 
-<hr>
+    <hr>
 
-{% include 'Board/form_thread_new.html' %}
+    {% include 'Board/form_thread_new.html' %}
 
-<hr>
+    <hr>
 
-{% include 'Board/thread.html' %}
+    {% include 'Board/thread.html' %}
+
+
 
 
 {% endblock %}
