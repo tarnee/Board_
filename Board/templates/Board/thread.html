@@ -2,57 +2,59 @@
 
 {% for thread, post_list, image_list_one_thread in zip_list %}
     <div class="thread">
+        <div class="oppost post">
+            <!-- the header of a original post -->
+            <span class="replytitle"> {{ thread.name_thread }}</span>
+            <span class="postername"> {{ thread.name_author }}</span>
+            <span class="post_date">{{ thread.date_pub|date:"D d M Y" }}</span>
+            <span class="post_date">{{ thread.date_pub|time:"H:i" }}</span>
 
-    <!-- the header of a original post -->
-    <div class="thread-name"> {{ thread.name_thread }}
-        <span class="post_author"> {{ thread.name_author }}</span>
-         <span class="post_date">{{ thread.date_pub|date:"D d M Y" }}</span>
-             <span class="post_date">{{ thread.date_pub|time:"H:i" }}</span>
+            <span class="reflink">No. {{ thread.original_post_number }}</span>
 
-        <span class="post_number">No. {{ thread.original_post_number }}</span></div>
-
-    <!-- op text -->
-    <div class="op-text">
-        {% for img in thread.op_img.all %}
-        <img src="{{ img.image_thumbnail.url }}" alt="xxx">
-
+            {% for img in thread.op_img.all %}
+                    <div class="file">
+                        <img class="thumb" src="{{ img.image_thumbnail.url }}" alt="xxx">
+                    </div>
             {% endfor %}
+            <div class="postbody">
+                <div class="message">
+                    {{ thread.original_post }}
+                    </div>
 
-        <br>
-        <p>{{ thread.original_post }}</p>
-    </div>
-
-    <!-- post for the thread -->
-    <div class="comments_table">
+            </div>
+        </div>
+        <!-- post for the thread -->
+        <div class="comments_table">
         <ul>
-        {% for post in post_list %}
-            <li><span class="post_author">{{ post.name_author }}</span>
-                <span class="post_date">{{ post.date_pub|date:"D d M Y" }}</span>
-             <span class="post_date">{{ post.date_pub|time:"H:i" }}</span>
+            {% for post in post_list %}
+                <li><span class="post_author">{{ post.name_author }}</span>
+                    <span class="post_date">{{ post.date_pub|date:"D d M Y" }}</span>
+                    <span class="post_date">{{ post.date_pub|time:"H:i" }}</span>
 
-                <span class="post_number">No. {{ post.post_number }}</span> <br>
-                <br>
-    <!-- pictures of some post -->
-                {% for image in post.img.all %}
-                    {% if image.image %}
+                    <span class="post_number">No. {{ post.post_number }}</span> <br>
+                    <br>
+                    <!-- pictures of some post -->
+                    {% for image in post.img.all %}
+                        {% if image.image %}
 
                             <a href="{{ image.image }}">
-                            <img src="{{ image.image_thumbnail.url }}" alt="" ></a>
+                                <img src="{{ image.image_thumbnail.url }}" alt=""></a>
 
-                    {% endif %}
-                {% endfor %}
-    <!-- post text -->
-                <div><p class="wrap"> {{ post.message }}</p></div>
-            </li>
-        {% endfor %}
-    <!-- the form for the new post -->
-
+                        {% endif %}
+                    {% endfor %}
+                    <!-- post text -->
+                    <div><p class="wrap"> {{ post.message }}</p></div>
+                </li>
+            {% endfor %}
+            <!-- the form for the new post -->
+        </ul>
         <li> {% include 'Board/form_post_new.html' %}  </li>
-    {% endfor %}
-    </ul>
+    </div>
+{% endfor %}
+</ul>
 </div>
 
-  <div class="pagination">
+<div class="pagination">
     <span class="step-links">
      <!--   {% if thread_list.has_previous %}
           <a href="?page={{ thread_list.previous_page_number }}">назад</a>
@@ -66,19 +68,19 @@
            <a href="?page={{ thread_list.next_page_number }}">вперед</a>
        {% endif %} -->
 
-     {% if thread_list.has_previous %}
-        <a class="prev-btn-btn-info" href="?page={{thread_list.previous_page_number}}">Назад</a>
-    {% endif %}
-    {% if thread_list.has_next %}
-        <a class="next-btn-btn-info" href="?page={{thread_list.next_page_number}}">Вперед</a>
-    {% endif %}
-    <div class="pages">
+        {% if thread_list.has_previous %}
+            <a class="prev-btn-btn-info" href="?page={{ thread_list.previous_page_number }}">Назад</a>
+        {% endif %}
+        {% if thread_list.has_next %}
+            <a class="next-btn-btn-info" href="?page={{ thread_list.next_page_number }}">Вперед</a>
+        {% endif %}
+        <div class="pages">
 
         {% for pg in page_range %}
             {% if thread_list.number == pg %}
-                <a href="?page={{pg}}" class="page-current">-{{pg}}-</a></li>
+                <a href="?page={{ pg }}" class="page-current">-{{ pg }}-</a></li>
             {% else %}
-                <a href="?page={{pg}}" class="page-not-current">{{pg}}</a></li>
+                <a href="?page={{ pg }}" class="page-not-current">{{ pg }}</a></li>
             {% endif %}
         {% endfor %}
 
@@ -86,6 +88,5 @@
 
 
     </span>
-</div>
 </div>
 <hr>

@@ -7,23 +7,20 @@
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %}</title>
 
-    <link rel="stylesheet" type="text/css" href="{%  static "Board/board_style.css" %}" media="screen">
+    <link rel="stylesheet" type="text/css" href="{% static "Board/common-0.6.1320-.css" %}" media="screen">
+    <link rel="stylesheet" type="text/css" href="{% static "Board/futaba-0.6.1320-.css" %}" media="screen">
+    <link rel="stylesheet" type="text/css" href="{% static "Board/board.css" %}" media="screen">
     <script type="text/javascript" src="{% static "Board/alertthis.js" %}"></script>
 </head>
 <body>
-
 <div class="main-container">
-
-    {% include 'Board/nav.html' %}
-
-    <div class="logo"><h1>  {% block logo %} {% endblock %}
-        </h1></div>
-
+    <div id="navigation">
+        {% include 'Board/nav.html' %}
+    </div>
     <div class="threads-container">
-
-    {%  block content %}
-
-    {% endblock %}
+    <div class="logo">{% block logo %} {% endblock %}</div>
+        {% block content %}
+        {% endblock %}
     </div>
 </div>
 

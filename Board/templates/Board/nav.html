@@ -1,12 +1,18 @@
- <nav class="site-menu">
-              <ul>
-        <li class="nav_title">Разделы сайта</li>
-
-        <!— Sections list —>
-       {% for section in section_list %}
-            <li>
-                <a href="{% url 'Board:section' section.name_section %}">/{{ section.name_section }} - {{ section.description }}</a>
-          </li>
-        {% endfor %}
-        </ul>
- </nav>
+<table class="category" border="0" width="100%" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr>
+            <td class="header">Разделы сайта</td>
+        </tr>
+        <tr>
+            <td class="list">
+                 {% for section in section_list %}
+                      <div>
+                        <a href="{% url 'Board:section' section.name_section %}" title="{{ section.name_section }}" target="board">
+                               {{ section.name_section }} — {{ section.description }}
+                        </a>
+		            </div>
+                {% endfor %}
+            </td>
+        </tr>
+    </tbody>
+</table>
